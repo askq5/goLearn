@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a2b751f6-7464-4dcf-baa9-3f033ca6b535" name="devbox">
+        <fileTransfer accessType="SFTP" host="10.248.132.15" port="22" sshConfigId="1b440ed7-5667-4f3d-9981-299dd025bee1" sshConfig="songkeqiang@10.248.132.15:22 agent" authAgent="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

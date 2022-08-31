@@ -1,0 +1,161 @@
+digraph gocallvis {
+    label="command-line-arguments";
+    labeljust="l";
+    fontname="Arial";
+    fontsize="14";
+    rankdir="LR";
+    bgcolor="lightgray";
+    style="solid";
+    penwidth="0.5";
+    pad="0.0";
+    nodesep="0.35";
+
+    node [shape="ellipse" style="filled" fillcolor="honeydew" fontname="Verdana" penwidth="1.0" margin="0.05,0.0"];
+    edge [minlen="2"]
+
+    subgraph "cluster_focus" {
+        labeljust="c";
+fontsize="18";
+bgcolor="#e6ecfa";
+label="main";
+labelloc="t";
+        
+        "command-line-arguments.init$1$1" [ fillcolor="lightblue" label="init$1$1" style="dotted,filled" ]
+        "command-line-arguments.init$1" [ fillcolor="lightblue" label="init$1" style="dotted,filled" ]
+        "command-line-arguments.main$1" [ fillcolor="lightblue" label="main$1" style="dotted,filled" ]
+        "command-line-arguments.main" [ fillcolor="lightblue" label="main" penwidth="0.5" ]
+        
+        subgraph "cluster_context" {
+        URL="/?f=context";
+tooltip="package: context";
+fillcolor="#E0FFE1";
+rank="sink";
+label="context";
+fontname="Tahoma bold";
+penwidth="0.8";
+fontsize="16";
+style="filled";
+        
+        "context.Background" [ fillcolor="#adedad" label="Background" penwidth="1.5" ]
+        
+    }
+
+        subgraph "cluster_fmt" {
+        URL="/?f=fmt";
+tooltip="package: fmt";
+penwidth="0.8";
+fontsize="16";
+style="filled";
+fillcolor="#E0FFE1";
+rank="sink";
+fontname="Tahoma bold";
+label="fmt";
+        
+        "fmt.Fprintf" [ fillcolor="#adedad" label="Fprintf" penwidth="1.5" ]
+        "fmt.Printf" [ penwidth="1.5" fillcolor="#adedad" label="Printf" ]
+        
+    }
+
+        subgraph "cluster_golang.org/x/sys/unix" {
+        URL="/?f=golang.org/x/sys/unix";
+fillcolor="lightyellow";
+rank="sink";
+label="unix";
+fontname="Tahoma bold";
+tooltip="package: golang.org/x/sys/unix";
+penwidth="0.8";
+fontsize="16";
+style="filled";
+        
+        "golang.org/x/sys/unix.SetsockoptInt" [ label="SetsockoptInt" penwidth="1.5" fillcolor="moccasin" ]
+        
+    }
+
+        subgraph "cluster_internal/poll" {
+        penwidth="0.8";
+fontsize="16";
+fillcolor="#E0FFE1";
+fontname="Tahoma bold";
+rank="sink";
+label="internal/poll";
+style="filled";
+URL="/?f=internal/poll";
+tooltip="package: internal/poll";
+        
+        "(*internal/poll.FD).RawControl" [ fillcolor="#adedad" label="(*FD).RawControl" penwidth="1.5" ]
+        
+    }
+
+        subgraph "cluster_net" {
+        fontsize="16";
+fillcolor="#E0FFE1";
+fontname="Tahoma bold";
+rank="sink";
+tooltip="package: net";
+penwidth="0.8";
+label="net";
+URL="/?f=net";
+style="filled";
+        
+        "(*net.rawConn).Control" [ fillcolor="#adedad" label="(*rawConn).Control" penwidth="1.5" ]
+        "(*net.netFD).dial" [ label="(*netFD).dial" penwidth="0.5" fillcolor="#adedad" ]
+        "(*net.netFD).listenStream" [ fillcolor="#adedad" label="(*netFD).listenStream" penwidth="0.5" ]
+        "(*net.netFD).listenDatagram" [ fillcolor="#adedad" label="(*netFD).listenDatagram" penwidth="0.5" ]
+        "(*net.ListenConfig).Listen" [ penwidth="1.5" fillcolor="#adedad" label="(*ListenConfig).Listen" ]
+        
+    }
+
+        subgraph "cluster_net/http" {
+        penwidth="0.8";
+fontsize="16";
+rank="sink";
+URL="/?f=net/http";
+tooltip="package: net/http";
+style="filled";
+fillcolor="#E0FFE1";
+fontname="Tahoma bold";
+label="net/http";
+        
+        "(*net/http.response).WriteHeader" [ fillcolor="#adedad" label="(*response).WriteHeader" penwidth="1.5" ]
+        "(*net/http.http2responseWriter).WriteHeader" [ fillcolor="#adedad" label="(*http2responseWriter).WriteHeader" penwidth="1.5" ]
+        "(net/http.HandlerFunc).ServeHTTP" [ fillcolor="#adedad" label="(HandlerFunc).ServeHTTP" penwidth="1.5" ]
+        "net/http.HandleFunc" [ fillcolor="#adedad" label="HandleFunc" penwidth="1.5" ]
+        "(*net/http.Server).Serve" [ fillcolor="#adedad" label="(*Server).Serve" penwidth="1.5" ]
+        
+    }
+
+        subgraph "cluster_os" {
+        fontsize="16";
+fillcolor="#E0FFE1";
+tooltip="package: os";
+penwidth="0.8";
+style="filled";
+fontname="Tahoma bold";
+rank="sink";
+label="os";
+URL="/?f=os";
+        
+        "os.Getpid" [ fillcolor="#adedad" label="Getpid" penwidth="1.5" ]
+        
+    }
+
+    }
+
+    "command-line-arguments.init$1$1" -> "golang.org/x/sys/unix.SetsockoptInt" [ color="saddlebrown" ]
+    "(*internal/poll.FD).RawControl" -> "command-line-arguments.init$1$1" [ style="dashed" color="saddlebrown" ]
+    "(*net.rawConn).Control" -> "(*internal/poll.FD).RawControl" [ color="saddlebrown" ]
+    "command-line-arguments.init$1" -> "(*net.rawConn).Control" [ style="dashed" color="saddlebrown" ]
+    "(*net.netFD).dial" -> "command-line-arguments.init$1" [ style="dashed" color="saddlebrown" ]
+    "(*net.netFD).listenStream" -> "command-line-arguments.init$1" [ style="dashed" color="saddlebrown" ]
+    "(*net.netFD).listenDatagram" -> "command-line-arguments.init$1" [ style="dashed" color="saddlebrown" ]
+    "command-line-arguments.main$1" -> "fmt.Fprintf" [ color="saddlebrown" ]
+    "command-line-arguments.main$1" -> "(*net/http.response).WriteHeader" [ style="dashed" color="saddlebrown" ]
+    "command-line-arguments.main$1" -> "(*net/http.http2responseWriter).WriteHeader" [ style="dashed" color="saddlebrown" ]
+    "(net/http.HandlerFunc).ServeHTTP" -> "command-line-arguments.main$1" [ style="dashed" color="saddlebrown" ]
+    "command-line-arguments.main" -> "os.Getpid" [ color="saddlebrown" ]
+    "command-line-arguments.main" -> "context.Background" [ color="saddlebrown" ]
+    "command-line-arguments.main" -> "(*net.ListenConfig).Listen" [ color="saddlebrown" ]
+    "command-line-arguments.main" -> "net/http.HandleFunc" [ color="saddlebrown" ]
+    "command-line-arguments.main" -> "fmt.Printf" [ color="saddlebrown" ]
+    "command-line-arguments.main" -> "(*net/http.Server).Serve" [ color="saddlebrown" ]
+}
